@@ -4,11 +4,12 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.util.*;
 
-public class View extends JFrame {
+public class View extends JFrame, IObserved {
     private final JLabel instruction = new JLabel("");
     private ArrayList<TextAreaTile> rectangles = new ArrayList<>();
     private final JLabel playersTurn = new JLabel();
-    ;
+    ArrayList<IObservers> observers;
+    
     private final JButton yes = new JButton("Yes");
     private final JButton no = new JButton("No");
     private final JButton dice = new JButton("Roll dice");
@@ -19,9 +20,25 @@ public class View extends JFrame {
     private JPanel topPanel = new JPanel();
     private JPanel bottomPanel = new JPanel();
 
+
+    private @Override void appendListener(IObserver obs){
+        observer.add(obs);
+    }
+
+    private @Override void removeListener(IObserver obs){
+        observer.remove(osb);
+    }
+
+
+    private @Override void void notify(){
+        for(IObserver observer: observers){
+            observer.update();
+        }
+    }
+
     public View() {
-
-
+        observer = new ArrayList<IObserver>();
+        
         JFrame f = new JFrame();
         JPanel panel = new JPanel(new BorderLayout());
 
